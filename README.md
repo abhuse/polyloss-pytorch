@@ -40,14 +40,18 @@ out.backward()
 ### Poly1CrossEntropyLoss
 * ***num_classes***, *(int)* - Number of classes
 * ***epsilon***, *(float)*, *(Default=1.0)* - PolyLoss epsilon
-* ***reduction***, *(str)*, *(Default='none')*  - apply reduction to the output, one of: none | sum | mean.
+* ***reduction***, *(str)*, *(Default='none')*  - apply reduction to the output, one of: none | sum | mean
+* ***weight***, *(torch.Tensor)*, *(Default=None)*  - manual rescaling weight for each class, passed to Cross-Entropy loss
 
 ### Poly1FocalLoss
 * ***num_classes***, *(int)* - Number of classes
 * ***epsilon***, *(float)*, *(Default=1.0)* - PolyLoss epsilon
 * ***alpha***, *(float)*, *(Default=0.25)* - Focal loss alpha 
 * ***gamma***, *(float)*, *(Default=2.0)* - Focal loss gamma
-* ***reduction***, *(str)*, *(Default='none')*  - apply reduction to the output, one of: none | sum | mean.
+* ***reduction***, *(str)*, *(Default='none')*  - apply reduction to the output, one of: none | sum | mean
+* ***weight***, *(torch.Tensor)*, *(Default=None)*  - manual rescaling weight for each class, passed to binary Cross-Entropy loss
+* ***label_is_onehot***, *(bool)*, *(Default=False)*  - set to True if labels are one-hot encoded
+
 
 ## Requirements
 * Python 3.6+
