@@ -31,8 +31,8 @@ logits = torch.rand([B, num_classes, H, W])
 labels = torch.randint(0, num_classes, [B, H, W])
 
 # optional, class-wise weights, shape must be broadcastable to [B, num_classes, H, W]
-# put more weight to class id 2
-pos_weight = torch.tensor([1., 1., 3.]).reshape([1, num_classes, 1, 1])
+# put 5 times more weight to class id 2
+pos_weight = torch.tensor([1., 1., 5.]).reshape([1, num_classes, 1, 1])
 
 loss = Poly1FocalLoss(num_classes=num_classes,
                       reduction='mean',
@@ -51,8 +51,8 @@ logits = torch.rand([B, num_classes, H, W])
 labels = torch.rand([B, num_classes, H, W]) # labels are of same shape as logits
 
 # optionally provide class-wise weights, shape must be broadcastable to [B, num_classes, H, W]
-# put 3 times more weight to class id 2
-pos_weight = torch.tensor([1., 1., 3.]).reshape([1, num_classes, 1, 1])
+# put 5 times more weight to class id 2
+pos_weight = torch.tensor([1., 1., 5.]).reshape([1, num_classes, 1, 1])
 # weight tensor shape [1, num_classes, 1, 1] is broadcastable to [B, num_classes, H, W]
 
 loss = Poly1FocalLoss(num_classes=num_classes,
