@@ -54,6 +54,7 @@ class Poly1FocalLoss(nn.Module):
                  gamma: float = 2.0,
                  reduction: str = "none",
                  weight: Tensor = None,
+                 pos_weight: Tensor = None,
                  label_is_onehot: bool = False):
         """
         Create instance of Poly1FocalLoss
@@ -72,6 +73,7 @@ class Poly1FocalLoss(nn.Module):
         self.gamma = gamma
         self.reduction = reduction
         self.weight = weight
+        self.pos_weight = pos_weight
         self.label_is_onehot = label_is_onehot
         return
 
@@ -97,8 +99,7 @@ class Poly1FocalLoss(nn.Module):
             # if labels are of shape [N, ...] e.g. segmentation task
             # convert to one-hot tensor of shape [N, num_classes, ...]
             else:
-                labels = F.one_hot(labels.unsqueeze(
-                    1), self.num_classes).transpose(1, -1).squeeze_(-1)
+                labels = F.one_hot(labels.unsqueeze(1), self.num_classes).transpose(1, -1).squeeze_(-1)
 
         labels = labels.to(device=logits.device,
                            dtype=logits.dtype)
@@ -106,7 +107,8 @@ class Poly1FocalLoss(nn.Module):
         ce_loss = F.binary_cross_entropy_with_logits(input=logits,
                                                      target=labels,
                                                      reduction="none",
-                                                     weight=self.weight)
+                                                     weight=self.weight,
+                                                     pos_weight=self.pos_weight)
         pt = labels * p + (1 - labels) * (1 - p)
         FL = ce_loss * ((1 - pt) ** self.gamma)
 
